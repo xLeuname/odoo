@@ -1,0 +1,33 @@
+custom_delete_stock/
+│── __init__.py
+│── __manifest__.py
+│── models/
+│   ├── __init__.py
+│   ├── delete_stock_moves.py
+
+# __manifest__.py
+{
+    "name": "Delete Stock Moves",
+    "version": "1.0",
+    "author": "Erwin",
+    "depends": ["stock"],
+    "data": [],
+    "installable": True,
+    "application": False,
+}
+
+# models/__init__.py
+from . import delete_stock_moves
+
+# models/delete_stock_moves.py
+from odoo import models, api
+
+class DeleteStockMoves(models.Model):
+    _inherit = "stock.move"
+
+    @api.model
+    def delete_stock_moves(self):
+        self.env.cr.execute("DELETE FROM stock_move WHERE company_id = %s", (self.env.company.id,))
+        self.env.cr.execute("DELETE FROM stock_move_line WHERE company_id = %s", (self.env.company.id,))
+        self.env.cr.execute("DELETE FROM stock_picking WHERE company_id = %s", (self.env.company.id,))
+        self.env.cr.commit()
