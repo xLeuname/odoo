@@ -11,9 +11,10 @@ custom_delete_stock/
     "version": "1.0",
     "author": "Erwin",
     "depends": ["stock"],
+    "category": "Inventory",
     "data": [],
     "installable": True,
-    "application": False,
+    "application": False
 }
 
 # models/__init__.py
